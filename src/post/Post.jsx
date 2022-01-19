@@ -13,13 +13,21 @@ export default function Post() {
           <span className="postCat">Music</span>
           <span className="postCat">Life</span>
         </div>
-        <span className="postTitle">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate,
-          quo quod. Nobis, nisi?
-        </span>
+        <span className="postTitle">Lorem ipsum dolor sit amet.</span>
         <hr />
         <span className="postDate">1 hour ago</span>
       </div>
+      <p className="postDec">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum maiores
+        tenetur suscipit possimus quidem, eos mollitia veritatis odio ad minus
+        nesciunt sint earum dolore amet et aut, illum quis. Omnis? Lorem ipsum
+        dolor sit amet consectetur adipisicing elit. Dolorum maiores tenetur
+        suscipit possimus quidem, eos mollitia veritatis odio ad minus nesciunt
+        sint earum dolore amet et aut, illum quis. Omnis? Lorem ipsum dolor sit
+        amet consectetur adipisicing elit. Dolorum maiores tenetur suscipit
+        possimus quidem, eos mollitia veritatis odio ad minus nesciunt sint
+        earum dolore amet et aut, illum quis. Omnis?
+      </p>
     </div>
   );
 }

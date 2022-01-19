@@ -32,11 +32,14 @@
 .sidebarItem > img {
   margin-top: 15px;
   height: 450px;
+  border-radius: 10px;
 }
 
 .sidebarItem > p {
   padding: 30px;
   text-align: center;
+  font-family: "Varela Round", sans-serif;
+  font-size: 15px;
 }
 
 .sidebarList {
@@ -45,6 +48,8 @@
 }
 
 .sidebarListItem {
+  font-family: "Varela Round", sans-serif;
+  font-size: 15px;
   display: inline-block;
   width: 50%;
   margin-top: 12px;
