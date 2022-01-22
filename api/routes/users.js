@@ -1,10 +1,22 @@
 const router = require("express").Router();
 const User = require("../models/User");
-const Post = require("../models/Post");
+const Post = require("../models/Post"); //Post required so that when user is deleted then associated posts are also deleted for the user.
 const bcrypt = require("bcrypt");
 
-//UPDATE
-//---------
+/* GET USER
+------------- */
+router.get("/:id", async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    const { password, ...allButPassword } = user._doc;
+    res.status(200).json(allButPassword);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+/* UPDATE USER DATA
+-------------------- */
 router.put("/:id", async (req, res) => {
   if (req.body.userId === req.params.id) {
     if (req.body.password) {
@@ -14,9 +26,7 @@ router.put("/:id", async (req, res) => {
     try {
       const updatedUser = await User.findByIdAndUpdate(
         req.params.id,
-        {
-          $set: req.body,
-        },
+        { $set: req.body },
         { new: true }
       );
       res.status(200).json(updatedUser);
@@ -28,8 +38,8 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-//DELETE
-//--------
+/* DELETE
+------------ */
 router.delete("/:id", async (req, res) => {
   if (req.body.userId === req.params.id) {
     try {
@@ -46,18 +56,6 @@ router.delete("/:id", async (req, res) => {
     }
   } else {
     res.status(401).json("You can only delete your own account.");
-  }
-});
-
-//GET USER
-//---------
-router.get("/:id", async (req, res) => {
-  try {
-    const user = await User.findById(req.params.id);
-    const { password, ...allButPassword } = user._doc;
-    res.status(200).json(allButPassword);
-  } catch (err) {
-    res.status(500).json(err);
   }
 });
 

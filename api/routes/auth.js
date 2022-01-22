@@ -2,8 +2,8 @@ const router = require("express").Router();
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
 
-//REGISTER
-//---------
+/* REGISTER
+------------- */
 router.post("/register", async (req, res) => {
   //when using async.. use try-catch block for error handling
   try {
@@ -22,8 +22,8 @@ router.post("/register", async (req, res) => {
   }
 });
 
-//LOGIN
-//---------
+/* LOGIN
+--------- */
 router.post("/login", async (req, res) => {
   try {
     const user = await User.findOne({ username: req.body.username });
