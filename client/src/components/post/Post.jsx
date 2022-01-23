@@ -1,34 +1,26 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import "./post.css";
 
-export default function Post() {
+export default function Post({ post }) {
   return (
     <div className="post">
-      <img
-        src="https://images.unsplash.com/photo-1518281420975-50db6e5d0a97?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
-        alt=""
-        className="postImg"
-      />
+      {post.photo && <img src={post.photo} alt="" className="postImg" />}
       <div className="postInfo">
         <div className="postCats">
-          <span className="postCat">Music</span>
-          <span className="postCat">Life</span>
+          {post.categories.map((c) => (
+            <span className="postCat">{c.name}</span>
+          ))}
         </div>
-        <span className="postTitle">Lorem ipsum dolor sit amet.</span>
+        <Link to={`/post/${post._id}`} className="link">
+          <span className="postTitle">{post.title}</span>
+        </Link>
         <hr />
-        <span className="postDate">1 hour ago</span>
+        <span className="postDate">
+          {new Date(post.createdAt).toDateString()}
+        </span>
       </div>
-      <p className="postDec">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum maiores
-        tenetur suscipit possimus quidem, eos mollitia veritatis odio ad minus
-        nesciunt sint earum dolore amet et aut, illum quis. Omnis? Lorem ipsum
-        dolor sit amet consectetur adipisicing elit. Dolorum maiores tenetur
-        suscipit possimus quidem, eos mollitia veritatis odio ad minus nesciunt
-        sint earum dolore amet et aut, illum quis. Omnis? Lorem ipsum dolor sit
-        amet consectetur adipisicing elit. Dolorum maiores tenetur suscipit
-        possimus quidem, eos mollitia veritatis odio ad minus nesciunt sint
-        earum dolore amet et aut, illum quis. Omnis?
-      </p>
+      <p className="postDec">{post.description}</p>
     </div>
   );
 }

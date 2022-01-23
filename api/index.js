@@ -7,7 +7,7 @@ const authRoute = require("./routes/auth");
 const userRoute = require("./routes/users");
 const postRoute = require("./routes/posts");
 const categoryRoute = require("./routes/categories");
-const PORT = 4000;
+const PORT = 4000; //APIs PORT
 
 /* Contains mongo url
 ---------------------*/

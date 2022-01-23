@@ -1,17 +1,29 @@
 import "./singlePost.css";
-import React, { Component } from "react";
+import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router";
+import axios from "axios";
 
 export default function Single() {
+  const location = useLocation();
+  const path = location.pathname.split("/")[2];
+  const [post, setPost] = useState({});
+
+  useEffect(() => {
+    const getPost = async () => {
+      const res = await axios.get("/posts/" + path);
+      setPost(res.data);
+    };
+    getPost();
+  }, [path]);
+
   return (
     <div className="singlePost">
       <div className="singlePostWrapper">
-        <img
-          src="https://images.unsplash.com/photo-1466096115517-bceecbfb6fde?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
-          alt=""
-          className="singlePostImg"
-        />
+        {post.photo && (
+          <img src={post.photo} alt="" className="singlePostImg" />
+        )}
         <h1 className="singlePostTitle">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          {post.title}
           <div className="singlePostEdit">
             <i className="singlePostIcon far fa-edit"></i>
             <i className="singlePostIcon fas fa-trash-alt"></i>
@@ -19,27 +31,13 @@ export default function Single() {
         </h1>
         <div className="singlePostInfo">
           <span className="singlePostAuthor">
-            Author: <b>Samar</b>
+            Author: <b>{post.username}</b>
           </span>
-          <span className="singlePostDate">1 hour ago</span>
+          <span className="singlePostDate">
+            {new Date(post.createdAt).toDateString()}
+          </span>
         </div>
-        <p className="singlePostDesc">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Necessitatibus voluptates esse quisquam tempora, quia mollitia
-          obcaecati dignissimos doloribus vitae rem corrupti. Ullam adipisci
-          fugiat nemo porro, architecto dolorum animi cum? Lorem ipsum dolor sit
-          amet consectetur adipisicing elit. Necessitatibus voluptates esse
-          quisquam tempora, quia mollitia obcaecati dignissimos doloribus vitae
-          rem corrupti. Ullam adipisci fugiat nemo porro, architecto dolorum
-          animi cum? Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Necessitatibus voluptates esse quisquam tempora, quia mollitia
-          obcaecati dignissimos doloribus vitae rem corrupti. Ullam adipisci
-          fugiat nemo porro, architecto dolorum animi cum? Lorem ipsum dolor sit
-          amet consectetur adipisicing elit. Necessitatibus voluptates esse
-          quisquam tempora, quia mollitia obcaecati dignissimos doloribus vitae
-          rem corrupti. Ullam adipisci fugiat nemo porro, architecto dolorum
-          animi cum?
-        </p>
+        <p className="singlePostDesc">{post.description}</p>
       </div>
     </div>
   );
