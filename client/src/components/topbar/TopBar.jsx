@@ -1,10 +1,15 @@
 import "./topbar.css";
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import { useLayoutEffect } from "react/cjs/react.production.min";
+import { Context } from "../../context/Context";
 
 export default function TopBar() {
-  const user = false;
+  const { user, dispatch } = useContext(Context); //From Actions.js
+  const publicFolder = "http://localhost:4000/images/";
+
+  const handleLogout = () => {
+    dispatch({ type: "LOGOUT" });
+  };
   return (
     <div className="top">
       <div className="topLeft">
@@ -35,16 +40,20 @@ export default function TopBar() {
               WRITE
             </Link>
           </li>
-          <li className="topListItem">{user && "LOGOUT"}</li>
+          <li className="topListItem" onClick={handleLogout}>
+            {user && "LOGOUT"}
+          </li>
         </ul>
       </div>
       <div className="topRight">
         {user ? (
-          <img
-            className="topImg"
-            src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"
-            alt=""
-          />
+          <Link to="/settings">
+            <img
+              className="topImg"
+              src={publicFolder + user.profilePic}
+              alt=""
+            />
+          </Link>
         ) : (
           <ul className="topList">
             <li className="topListItem">

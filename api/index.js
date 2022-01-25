@@ -8,6 +8,7 @@ const userRoute = require("./routes/users");
 const postRoute = require("./routes/posts");
 const categoryRoute = require("./routes/categories");
 const PORT = 4000; //APIs PORT
+const path = require("path");
 
 /* Contains mongo url
 ---------------------*/
@@ -16,6 +17,10 @@ dotenv.config();
 /* Required for using json format through this application (ex. from Postman)
 ----------------------------*/
 app.use(express.json());
+
+/*To make the images folder public so that application can access it
+-----------------------------------*/
+app.use("/images", express.static(path.join(__dirname, "/images")));
 
 /* Mongo connection
 --------------------*/
@@ -29,18 +34,18 @@ mongoose
 
 /* Image storage
 -----------------*/
-const imgStorage = multer.diskStorage({
+const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "img"); //stores the uploaded files in the 'img' folder
+    cb(null, "images"); //stores the uploaded files in the 'img' folder
   },
   filename: (req, file, cb) => {
-    cb(null, "hello.jpeg"); //filename is taken from the actual name of the uploaded file
+    cb(null, req.body.name); //filename is taken from the actual name of the uploaded file
   },
 });
 
-const upload = multer({ imgStorage: imgStorage });
+const upload = multer({ storage: storage });
 app.post("/api/upload", upload.single("file"), (req, res) => {
-  res.status(200).json("File uploaded.");
+  res.status(200).json("Image file uploaded.");
 });
 
 /* Routes
